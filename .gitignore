@@ -30,6 +30,9 @@
 # Credentials
 credentials.py
 
+# Cache
+__pycache__/
+
 # Driver Folder
 chromedriver_win32/
 

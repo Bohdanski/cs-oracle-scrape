@@ -28,8 +28,32 @@ def check_refresh():
     try:
         driver.find_element_by_class_name("HeaderLogo")
     except NoSuchElementException:
-        return False
-    return True
+        return True
+    return False
+
+def click_element(path, method):
+    """
+    Main function to interact with different webpage elements.
+    Paramaeters are the path or id of the element that is being interacted with
+    as well as the method Selenium is using to find the element.
+    """
+    while True:
+        try:
+            if method == "xpath":
+                element = driver.find_element_by_xpath(path)
+            elif method == "class":
+                element = driver.find_element_by_class_name(path)
+            elif method == "id":
+                element = driver.find_element_by_id(path)
+            else:
+                raise NameError("The specified method is not defined.")
+            element.click()
+            sleep(5)
+            break
+        except Exception:
+            while check_refresh() == True:
+                driver.refresh()
+                sleep(5)
 
 def main():
     """
@@ -42,98 +66,24 @@ def main():
     log_in(cs_username, cs_password)
 
     try:
-        while True:
-            try:
-                dashboard_link = driver.find_element_by_link_text("Customer Detail Export Dashboard - Standard SL Export")
-                dashboard_link.click()
-                sleep(5)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@title="Customer Detail Export Dashboard - Standard SL Export"]', "xpath")
 
-        while True:
-            try:
-                drop_dwn_btn = driver.find_element_by_class_name("promptDropDownButton")
-                drop_dwn_btn.click()
-                sleep(5)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element("promptDropDownButton", "class")
 
-        while True:
-            try:
-                wtd_btn = driver.find_element_by_xpath("/html/body/div[9]/div/div[2]/div[3]/span")
-                wtd_btn.click()
-                sleep(5)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@title="WTD"]', "xpath")
 
-        while True:
-            try:
-                apply_btn = driver.find_element_by_id("gobtn")
-                apply_btn.click()
-                sleep(5)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element("gobtn", "id")
 
-        while True:
-            try:
-                export_link = driver.find_element_by_link_text("Export")
-                export_link.click()
-                sleep(1)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@title="Export to different format"]', "xpath")
 
-        while True:
-            try:
-                data_link = driver.find_element_by_link_text("Data")
-                data_link.click
-                sleep(1)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@title="Download columnar data"]', "xpath")
 
-        while True:
-            try:
-                csv_link = driver.find_element_by_link_text("Tab delimited Format")
-                csv_link.click()
-                sleep(1)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@aria-label="Tab delimited Format"]', "xpath")
 
-        while True:
-            try:
-                ok_btn = driver.find_element_by_partial_link_text("OK")
-                ok_btn.click()
-                sleep(1)
-                break
-            except Exception:
-                while check_refresh() == False:
-                    driver.refresh()
-                    sleep(5)
+        click_element('//*[@name="OK"]', "xpath")
     finally:
         try:
-            logout_btn = driver.find_element_by_id("logout")
-            logout_btn.click()
-            sleep(5)
+            click_element("logout", "id")
         finally:
             driver.delete_all_cookies()
             driver.close()
