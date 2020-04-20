@@ -33,7 +33,7 @@ def check_refresh():
         return True
     return False
 
-def click_element(path, method):
+def click_element(path, method, delay):
     """
     Main function to interact with different webpage elements.
     Paramaeters are the path or id of the element that is being interacted with
@@ -52,7 +52,7 @@ def click_element(path, method):
             else:
                 raise NameError("The specified method is not defined.")
             element.click()
-            sleep(5)
+            sleep(delay)
             break
         except Exception:
             # If the element is unable to be clicked, call the refresh method
@@ -73,32 +73,35 @@ def main():
 
     try:
         # Click on the out of stock dashboard.
-        click_element('//*[@title="Customer Detail Export Dashboard - Standard SL Export"]', "xpath")
+        click_element('//*[@title="Customer Detail Export Dashboard - Standard SL Export"]', "xpath", 15)
 
         # Click the dropdown arrow for the Timeframe prompt.
-        click_element("promptDropDownButton", "class")
+        click_element("promptDropDownButton", "class", 1)
 
         # Click the WTD (Week to Date) option.
-        click_element('//*[@title="WTD"]', "xpath")
+        click_element('//*[@title="WTD"]', "xpath", 1)
 
         # Click apply.
-        click_element("gobtn", "id")
+        click_element("gobtn", "id", 10)
 
         # Click export.
-        click_element('//*[@title="Export to different format"]', "xpath")
+        click_element('//*[@title="Export to different format"]', "xpath", 1)
+
+        # Click the "Excel 2007+" option.
+        click_element('//*[@aria-label="Excel 2007+"]', "xpath", 1)
 
         # Click the pop-up menu to select the method for export.
-        click_element('//*[@title="Download columnar data"]', "xpath")
+        # click_element('//*[@title="Download columnar data"]', "xpath")
 
         # Click the "Tab Delimited Format" option.
-        click_element('//*[@aria-label="Tab delimited Format"]', "xpath")
+        # click_element('//*[@aria-label="Tab delimited Format"]', "xpath")
 
         # Click "OK" to close out of the pop-up.
-        click_element('//*[@name="OK"]', "xpath")
+        click_element('//*[@name="OK"]', "xpath", 1)
     finally:
         try:
             # Click logout to end the session instance.
-            click_element("logout", "id")
+            click_element("logout", "id", 5)
         finally:
             # Delete all cookies, close the browser, and exit the script.
             driver.delete_all_cookies()

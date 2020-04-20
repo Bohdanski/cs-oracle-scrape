@@ -31,7 +31,7 @@ def check_refresh():
         return True
     return False
 
-def click_element(path, method):
+def click_element(path, method, delay):
     """
     Main function to interact with different webpage elements.
     Paramaeters are the path or id of the element that is being interacted with
@@ -48,7 +48,7 @@ def click_element(path, method):
             else:
                 raise NameError("The specified method is not defined.")
             element.click()
-            sleep(5)
+            sleep(delay)
             break
         except Exception:
             while check_refresh() == True:
@@ -66,24 +66,26 @@ def main():
     log_in(cs_username, cs_password)
 
     try:
-        click_element('//*[@title="Customer Detail Export Dashboard - Standard SL Export"]', "xpath")
+        click_element('//*[@title="Customer Detail Export Dashboard - Standard SL Export"]', "xpath", 15)
 
-        click_element("promptDropDownButton", "class")
+        click_element("promptDropDownButton", "class", 1)
 
-        click_element('//*[@title="WTD"]', "xpath")
+        click_element('//*[@title="WTD"]', "xpath", 1)
 
-        click_element("gobtn", "id")
+        click_element("gobtn", "id", 10)
 
-        click_element('//*[@title="Export to different format"]', "xpath")
+        click_element('//*[@title="Export to different format"]', "xpath", 1)
+        
+        click_element('//*[@aria-label="Excel 2007+"]', "xpath", 1)
 
-        click_element('//*[@title="Download columnar data"]', "xpath")
+        # click_element('//*[@title="Download columnar data"]', "xpath", 1)
 
-        click_element('//*[@aria-label="Tab delimited Format"]', "xpath")
+        # click_element('//*[@aria-label="Tab delimited Format"]', "xpath", 15)
 
-        click_element('//*[@name="OK"]', "xpath")
+        click_element('//*[@name="OK"]', "xpath", 1)
     finally:
         try:
-            click_element("logout", "id")
+            click_element("logout", "id", 5)
         finally:
             driver.delete_all_cookies()
             driver.close()
