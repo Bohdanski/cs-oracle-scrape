@@ -1,6 +1,6 @@
 # CS Oracle Scrape
 
-CS Oracal Scrape is essentially a webcrawler script that will automatically log into the C&S Oracle database, navigate to the out of stock dashboard, and export the current WTD out of stock report. The export will be in plan text/csv format and will be placed on a drive for the out of stock SSIS package to pick up and import.
+CS Oracle Scrape is essentially a webcrawler script that will automatically log into the C&S Oracle database, navigate to the out of stock dashboard, and export the current WTD out of stock report. The export will be in plan text/csv format and will be placed on a drive for the out of stock SSIS package to pick up and import.
 
 
 
